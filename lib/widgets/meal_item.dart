@@ -11,6 +11,7 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
+  final Function removeItem;
 
   MealItem({
     required this.id,
@@ -19,6 +20,7 @@ class MealItem extends StatelessWidget {
     required this.duration,
     required this.complexity,
     required this.affordability,
+    required this.removeItem,
   });
 
   String get complexityText {
@@ -48,10 +50,16 @@ class MealItem extends StatelessWidget {
   }
 
   void selectMeal(BuildContext context) {
-    Navigator.of(context).pushNamed(
+    Navigator.of(context)
+        .pushNamed(
       MealDetailScreen.routeName,
       arguments: id,
-    );
+    )
+        .then((result) {
+      if (result != null) {
+        removeItem(result);
+      }
+    });
   }
 
   @override
@@ -109,29 +117,32 @@ class MealItem extends StatelessWidget {
             // Info under bilde:
             Padding(
               padding: const EdgeInsets.all(20),
-              child: Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    //Tid
-                    Row(children: [
-                      const Icon(Icons.schedule),
-                      const SizedBox(width: 6),
-                      Text('$duration min'),
-                    ]),
-                    //Vanskelighetsgrad
-                    Row(children: [
-                      const Icon(Icons.work),
-                      const SizedBox(width: 6),
-                      Text(complexityText),
-                    ]),
-                    //Pris
-                    Row(children: [
-                      const Icon(Icons.attach_money),
-                      const SizedBox(width: 6),
-                      Text(affordabilityText),
-                    ]),
-                  ],
+              //Expanded kaster ParentDataWidget incorrect issue hvis ikke wrapped i en Container
+              child: Container(
+                child: Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      //Tid
+                      Row(children: [
+                        const Icon(Icons.schedule),
+                        const SizedBox(width: 6),
+                        Text('$duration min'),
+                      ]),
+                      //Vanskelighetsgrad
+                      Row(children: [
+                        const Icon(Icons.work),
+                        const SizedBox(width: 6),
+                        Text(complexityText),
+                      ]),
+                      //Pris
+                      Row(children: [
+                        const Icon(Icons.attach_money),
+                        const SizedBox(width: 6),
+                        Text(affordabilityText),
+                      ]),
+                    ],
+                  ),
                 ),
               ),
             ),

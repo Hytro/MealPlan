@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         FiltersScreen.routeName: (ctx) => FiltersScreen()
       },
       onGenerateRoute: (settings) {
-        print(settings.arguments);
+        //print(settings.arguments);
         //return MaterialPageRoute(builder: (ctx) => CategoriesScreen());
       },
       onUnknownRoute: (settings) {
