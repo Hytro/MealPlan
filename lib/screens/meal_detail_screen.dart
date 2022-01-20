@@ -6,6 +6,11 @@ class MealDetailScreen extends StatelessWidget {
   //const MealDetailScreen({Key? key}) : super(key: key);
   static const routeName = '/meal-detial';
 
+  final dynamic toggleFavorite;
+  final dynamic isFavorite;
+
+  MealDetailScreen(this.toggleFavorite, this.isFavorite);
+
   Widget buildSectionTitle(BuildContext context, String text) {
     return Container(
       //Legg til MediaQuary for mer responsiv liste
@@ -80,10 +85,10 @@ class MealDetailScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
-        onPressed: () {
-          Navigator.of(context).pop(mealId);
-        },
+        child: Icon(
+          isFavorite(mealId) ? Icons.star : Icons.star_border,
+        ),
+        onPressed: () => toggleFavorite(mealId),
       ),
     );
   }
